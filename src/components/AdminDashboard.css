@@ -1,0 +1,237 @@
+.admin-layout {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--secondary-bg);
+}
+
+.admin-sidebar {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-brand {
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.admin-sidebar-logo {
+    height: 40px;
+    width: auto;
+}
+
+.admin-brand h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--accent-emphasis);
+}
+
+.admin-nav {
+    flex: 1;
+    padding: 1.5rem 0;
+    overflow-y: auto;
+}
+
+.admin-nav-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    text-align: left;
+    font-size: 1rem;
+    color: var(--text-gray);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-inter);
+}
+
+.admin-nav-item:hover {
+    background-color: var(--secondary-bg);
+    color: var(--primary-green);
+}
+
+.admin-nav-item.active {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-green);
+    border-left-color: var(--primary-green);
+    font-weight: 500;
+}
+
+.admin-logout-container {
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.admin-user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.admin-email {
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    font-family: monospace;
+}
+
+.admin-logout-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+}
+
+.admin-main {
+    flex: 1;
+    margin-left: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-header {
+    background-color: white;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-light);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.admin-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: left;
+    color: var(--text-dark);
+}
+
+.admin-content-area {
+    padding: 2rem;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Tab Content Styles */
+.admin-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 1.75rem;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--primary-green);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-card h3 {
+    font-size: 1rem;
+    color: var(--text-gray);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-inter);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-dark);
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 992px) {
+    .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Admin Table Styles */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.admin-table th, .admin-table td {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.admin-table th {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background-color: #f8fafc;
+}
+
+.admin-table tr:hover {
+    background-color: rgba(76, 175, 80, 0.02);
+}
+
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon:hover {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.text-red { color: #ef4444; }
+.font-semibold { font-weight: 600; }
+.text-xl { font-size: 1.25rem; }
+.font-bold { font-weight: 700; }
+.text-gray { color: var(--text-gray); }

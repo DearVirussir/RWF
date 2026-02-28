@@ -1,0 +1,101 @@
+.initiatives-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.initiative-card {
+    text-align: center;
+    padding: 3.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    border-radius: 24px;
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.initiative-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-green), var(--accent-light));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.initiative-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-xl);
+    border-color: transparent;
+}
+
+.initiative-card:hover::before {
+    transform: scaleX(1);
+}
+
+.icon-wrapper {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    color: var(--primary-green);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.2);
+}
+
+.initiative-card:hover .icon-wrapper {
+    background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+    color: white;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+}
+
+.initiative-icon {
+    transition: all 0.3s ease;
+}
+
+.initiative-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+    color: var(--text-dark);
+    font-family: var(--font-outfit);
+    font-weight: 700;
+}
+
+.initiative-desc {
+    color: var(--text-gray);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 0;
+}
+
+@media (max-width: 992px) {
+    .initiatives-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .initiatives-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .initiative-card {
+        padding: 2.5rem 1.5rem;
+    }
+}

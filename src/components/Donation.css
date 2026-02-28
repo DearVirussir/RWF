@@ -1,0 +1,250 @@
+.donation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+}
+
+.donation-card {
+    padding: 3rem;
+    border-radius: 20px;
+    background-color: white;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.outline-card {
+    border: 1px solid var(--border-light);
+    box-shadow: var(--shadow-md);
+}
+
+.outline-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.donation-method-title {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 1rem;
+    color: var(--accent-emphasis);
+    font-family: var(--font-outfit);
+    font-weight: 700;
+}
+
+.easypaisa-content {
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.instructions-side {
+    flex: 1;
+    min-width: 250px;
+}
+
+.qr-side {
+    width: 200px;
+    min-width: 200px;
+}
+
+.donation-steps {
+    padding-left: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.donation-steps li {
+    margin-bottom: 1rem;
+    color: var(--text-gray);
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+.highlight-number {
+    font-weight: 700;
+    color: var(--primary-green);
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+}
+
+.account-details-box {
+    background: linear-gradient(to right, rgba(16, 185, 129, 0.1), transparent);
+    padding: 1.25rem 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-green);
+}
+
+.account-details-box .label {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.account-details-box .value {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.qr-image-wrapper {
+    background-color: white;
+    padding: 1rem;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    height: 220px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease;
+}
+
+.qr-image-wrapper:hover {
+    transform: scale(1.02);
+}
+
+.qr-code-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.bank-details {
+    background-color: var(--secondary-bg);
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid var(--border-light);
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-light);
+    padding: 1rem 0;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.detail-row:first-child {
+    padding-top: 0;
+}
+
+.detail-row .label {
+    font-weight: 600;
+    color: var(--text-gray);
+    font-size: 0.95rem;
+}
+
+.detail-row .value {
+    font-family: monospace;
+    font-size: 1.15rem;
+    color: var(--text-dark);
+    text-align: right;
+    font-weight: 600;
+}
+
+.receipt-note {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--secondary-green);
+    margin-top: 1.5rem;
+}
+
+.receipt-note p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.transparency-pledge {
+    background: linear-gradient(135deg, var(--primary-green), var(--accent-emphasis));
+    color: white;
+    padding: 4rem 2.5rem;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(5, 150, 105, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.transparency-pledge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+CjxwYXRoIGQ9Ik0gMCAwIEwgNDAgNDAgTSA0MCAwIEwgMCA0MCIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+') repeat;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.transparency-pledge h3 {
+    font-size: 2.25rem;
+    margin-bottom: 1.25rem;
+    font-weight: 800;
+    font-family: var(--font-outfit);
+    position: relative;
+    z-index: 1;
+}
+
+.transparency-pledge p {
+    margin: 0;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 992px) {
+    .donation-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .easypaisa-content {
+        flex-direction: column;
+    }
+
+    .qr-side {
+        width: 100%;
+    }
+
+    .donation-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .transparency-pledge {
+        padding: 3rem 1.5rem;
+    }
+
+    .transparency-pledge h3 {
+        font-size: 1.75rem;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .detail-row .value {
+        text-align: left;
+    }
+}
