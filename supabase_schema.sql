@@ -46,14 +46,24 @@ BEGIN
     END IF;
 END $$;
 
-/* --- 4. Updates table --- */
-CREATE TABLE IF NOT EXISTS public.updates (
+/* --- 4. Updates table (Progress Updates) --- */
+CREATE TABLE IF NOT EXISTS public.progress_updates (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   image_url TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
+
+-- Handle case where it might have been named 'updates'
+DO $$
+BEGIN
+    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name='updates') AND 
+       NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name='progress_updates') THEN
+        ALTER TABLE public.updates RENAME TO progress_updates;
+    END IF;
+END $$;
+
 
 /* --- 5. Donations table --- */
 CREATE TABLE IF NOT EXISTS public.donations (
@@ -94,6 +104,33 @@ CREATE TABLE IF NOT EXISTS public.newsletter_subscriptions (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
+/* --- 9. Special Appeals Table --- */
+CREATE TABLE IF NOT EXISTS public.special_appeals (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title TEXT NOT NULL,
+  subtitle TEXT,
+  description TEXT,
+  goal_amount DECIMAL(12, 2) DEFAULT 0,
+  current_amount DECIMAL(12, 2) DEFAULT 0,
+  image_url TEXT,
+  is_active BOOLEAN DEFAULT TRUE,
+  is_ramadan_theme BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Insert the current Ramadan 2026 data as a starting point
+INSERT INTO public.special_appeals (title, subtitle, description, goal_amount, current_amount, image_url, is_active, is_ramadan_theme)
+VALUES (
+  'Ramadan 2026 Special Appeal',
+  'Eid Shopping for 600+ Orphans & Rashan Distribution',
+  'Once again, in this Ramadan, we are committed to providing Eid shopping for our orphans and food packages for widows.',
+  2000000,
+  200000,
+  'https://i.ibb.co/QjDjVVZN/ramadan.jpg',
+  TRUE,
+  TRUE
+) ON CONFLICT DO NOTHING;
+
 -- NOTE: If you still see "column not found" errors in your browser after running this,
 -- please go to the Supabase Dashboard > API Settings and look for a way to "Refresh Schema Cache" 
 -- or simply wait a few seconds for the cache to update automatically.
@@ -101,8 +138,8 @@ CREATE TABLE IF NOT EXISTS public.newsletter_subscriptions (
 /* --- 9. RLS Policies (CRITICAL for public forms) --- */
 
 -- Enable RLS on public tables
-ALTER TABLE public.contact_messages ENABLE CONTROL; -- Some versions use ENABLE ROW LEVEL SECURITY
-ALTER TABLE public.newsletter_subscriptions ENABLE CONTROL;
+ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.newsletter_subscriptions ENABLE ROW LEVEL SECURITY;
 
 -- Allow anyone to insert messages (Public Contact Form)
 DROP POLICY IF EXISTS "Allow public insert" ON public.contact_messages;
@@ -116,11 +153,40 @@ CREATE POLICY "Allow public subscribe" ON public.newsletter_subscriptions FOR IN
 -- For now, we assume the admin panel handles auth before calling these.
 ALTER TABLE public.contact_messages DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.newsletter_subscriptions DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.special_appeals DISABLE ROW LEVEL SECURITY;
 
 /* 
-  IMPORTANT: If you want to keep RLS ENABLED for security, 
-  run the POLICY creation lines above. 
-  If you want the simplest fix, run:
-  ALTER TABLE public.newsletter_subscriptions DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE public.contact_messages DISABLE ROW LEVEL SECURITY;
+  --- 10. SUPABASE STORAGE SETUP ---
+  If your image uploads fail, please run the following SQL or ensure 
+  your "foundation" bucket is PUBLIC and has RLS policies.
 */
+
+-- Create the bucket if it doesn't exist
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('foundation', 'foundation', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Policy to allow authenticated users to upload files
+CREATE POLICY "Allow authenticated uploads"
+ON storage.objects FOR INSERT
+TO authenticated
+WITH CHECK (bucket_id = 'foundation');
+
+-- Policy to allow authenticated users to update files
+CREATE POLICY "Allow authenticated updates"
+ON storage.objects FOR UPDATE
+TO authenticated
+USING (bucket_id = 'foundation');
+
+-- Policy to allow authenticated users to delete files
+CREATE POLICY "Allow authenticated deletes"
+ON storage.objects FOR DELETE
+TO authenticated
+USING (bucket_id = 'foundation');
+
+-- Policy to allow public to view files
+CREATE POLICY "Allow public views"
+ON storage.objects FOR SELECT
+TO public
+USING (bucket_id = 'foundation');
+

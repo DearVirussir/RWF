@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { Trash2, Plus, Image as ImageIcon, Briefcase } from 'lucide-react';
+import { Trash2, Plus, Image as ImageIcon, Briefcase, Upload } from 'lucide-react';
+import { uploadImage } from '@/lib/uploadUtils';
 
 const StaffManagement = () => {
     const [staff, setStaff] = useState<any[]>([]);
@@ -12,6 +13,8 @@ const StaffManagement = () => {
         image_url: ''
     });
     const [submitting, setSubmitting] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [uploadMode, setUploadMode] = useState<'url' | 'file'>('file');
 
     useEffect(() => {
         fetchStaff();
@@ -36,18 +39,36 @@ const StaffManagement = () => {
         e.preventDefault();
         setSubmitting(true);
 
-        const { error } = await supabase
-            .from('staff')
-            .insert([newStaff]);
+        try {
+            let finalImageUrl = newStaff.image_url;
 
-        if (!error) {
-            setNewStaff({ name: '', position: '', image_url: '' });
-            setShowAddForm(false);
-            fetchStaff();
-        } else {
-            alert('Failed to add staff member: ' + error.message);
+            if (uploadMode === 'file' && selectedFile) {
+                finalImageUrl = await uploadImage(selectedFile);
+            }
+
+            if (!finalImageUrl) {
+                alert('Please select a photo or provide an image URL');
+                setSubmitting(false);
+                return;
+            }
+
+            const { error } = await supabase
+                .from('staff')
+                .insert([{ ...newStaff, image_url: finalImageUrl }]);
+
+            if (!error) {
+                setNewStaff({ name: '', position: '', image_url: '' });
+                setSelectedFile(null);
+                setShowAddForm(false);
+                fetchStaff();
+            } else {
+                alert('Failed to add staff member: ' + error.message);
+            }
+        } catch (error: any) {
+            alert('Error: ' + error.message);
+        } finally {
+            setSubmitting(false);
         }
-        setSubmitting(false);
     };
 
     const deleteStaff = async (id: string) => {
@@ -106,15 +127,59 @@ const StaffManagement = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Image URL *</label>
-                            <input
-                                type="url"
-                                value={newStaff.image_url}
-                                onChange={e => setNewStaff({ ...newStaff, image_url: e.target.value })}
-                                required
-                                placeholder="https://i.ibb.co/..."
-                                className="form-control"
-                            />
+                            <label>Profile Picture Source *</label>
+                            <div className="flex gap-1 mb-1">
+                                <button
+                                    type="button"
+                                    onClick={() => setUploadMode('file')}
+                                    className={`btn-outline ${uploadMode === 'file' ? 'active' : ''}`}
+                                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                                >
+                                    Upload from Device
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setUploadMode('url')}
+                                    className={`btn-outline ${uploadMode === 'url' ? 'active' : ''}`}
+                                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                                >
+                                    Image URL
+                                </button>
+                            </div>
+                            
+                            {uploadMode === 'file' ? (
+                                <div className="file-upload-wrapper" style={{ 
+                                    border: '2px dashed var(--border-light)', 
+                                    padding: '1.5rem', 
+                                    borderRadius: '8px', 
+                                    textAlign: 'center',
+                                    backgroundColor: 'var(--main-bg)'
+                                }}>
+                                    <input
+                                        type="file"
+                                        id="staff-file"
+                                        accept="image/*"
+                                        onChange={e => setSelectedFile(e.target.files?.[0] || null)}
+                                        style={{ display: 'none' }}
+                                    />
+                                    <label htmlFor="staff-file" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                                        <Upload size={24} className="text-green" />
+                                        <span className="text-dark font-semibold">
+                                            {selectedFile ? selectedFile.name : 'Click to select photo from device'}
+                                        </span>
+                                        <span className="text-gray" style={{ fontSize: '0.8rem' }}>Supports JPG, PNG, WEBP</span>
+                                    </label>
+                                </div>
+                            ) : (
+                                <input
+                                    type="url"
+                                    value={newStaff.image_url}
+                                    onChange={e => setNewStaff({ ...newStaff, image_url: e.target.value })}
+                                    required={uploadMode === 'url'}
+                                    placeholder="https://i.ibb.co/..."
+                                    className="form-control"
+                                />
+                            )}
                         </div>
                         <button type="submit" className="btn-primary" disabled={submitting} style={{ alignSelf: 'flex-start' }}>
                             {submitting ? 'Adding...' : 'Save Member'}

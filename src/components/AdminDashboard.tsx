@@ -9,9 +9,13 @@ import {
     MessageSquare,
     DollarSign,
     LogOut,
-    FolderOpen
+    FolderOpen,
+    Briefcase,
+    Mail as MailIcon,
+    Star
 } from 'lucide-react';
 import './AdminDashboard.css';
+import AppealManagement from './admin/AppealManagement';
 
 interface AdminDashboardProps {
     session: any;
@@ -36,10 +40,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ session }) => {
                 return <GalleryManagement />;
             case 'newsletter':
                 return <NewsletterManagement />;
+            case 'appeal':
+                return <AppealManagement />;
             case 'updates':
-                return <ProgressUpdates />;
-            case 'donations':
-                return <DonationTracking />;
+                return <ProgressUpdateManagement />;
             case 'messages':
                 return <ContactMessages />;
             default:
@@ -52,7 +56,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ session }) => {
             {/* Sidebar */}
             <aside className="admin-sidebar">
                 <div className="admin-brand">
-                    <img src="https://i.ibb.co/vC9QCp6X/RWF-logo.png" alt="Logo" className="admin-sidebar-logo" />
+                    <img 
+                        src="/rwflogo.gif" 
+                        alt="Logo" 
+                        className="admin-sidebar-logo" 
+                        style={{ mixBlendMode: 'multiply' }}
+                    />
                     <h3>Admin Panel</h3>
                 </div>
 
@@ -72,11 +81,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ session }) => {
                     <button className={`admin-nav-item ${activeTab === 'newsletter' ? 'active' : ''}`} onClick={() => setActiveTab('newsletter')}>
                         <MailIcon size={20} /> Newsletter
                     </button>
+                    <button className={`admin-nav-item ${activeTab === 'appeal' ? 'active' : ''}`} onClick={() => setActiveTab('appeal')}>
+                        <Star size={20} /> Special Appeal
+                    </button>
                     <button className={`admin-nav-item ${activeTab === 'updates' ? 'active' : ''}`} onClick={() => setActiveTab('updates')}>
                         <FileText size={20} /> Progress Updates
-                    </button>
-                    <button className={`admin-nav-item ${activeTab === 'donations' ? 'active' : ''}`} onClick={() => setActiveTab('donations')}>
-                        <DollarSign size={20} /> Donations Info
                     </button>
                     <button className={`admin-nav-item ${activeTab === 'messages' ? 'active' : ''}`} onClick={() => setActiveTab('messages')}>
                         <MessageSquare size={20} /> Messages
@@ -113,7 +122,7 @@ import ContactMessages from './admin/ContactMessages';
 import CaseManagement from './admin/CaseManagement';
 import StaffManagement from './admin/StaffManagement';
 import NewsletterManagement from './admin/NewsletterManagement';
-import { Briefcase, Mail as MailIcon } from 'lucide-react';
+import ProgressUpdateManagement from './admin/ProgressUpdateManagement';
 
 const StatisticsDashboard = () => {
     const [stats, setStats] = useState({
@@ -184,7 +193,6 @@ const StatisticsDashboard = () => {
     );
 };
 
-const ProgressUpdates = () => <div className="card"><h3>Progress Updates</h3><p>Post recent news and success stories. (Coming Soon)</p></div>;
-const DonationTracking = () => <div className="card"><h3>Donations</h3><p>View and verify incoming donations. (Coming Soon)</p></div>;
+
 
 export default AdminDashboard;

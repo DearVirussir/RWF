@@ -26,11 +26,9 @@ const Navbar = () => {
         { name: 'About', href: '#about' },
         { name: 'Team', href: '#staff' },
         { name: 'Cases', href: '#cases' },
-        { name: 'Ramadan 2026', href: '#ramadan-appeal' },
         { name: 'Our Work', href: '#initiatives' },
         { name: 'Gallery', href: '#gallery' },
         { name: 'Donate', href: '#donate' },
-        { name: 'Location', href: '#location' },
         { name: 'Contact', href: '#contact' },
     ];
 
@@ -39,9 +37,10 @@ const Navbar = () => {
             <div className="container nav-container flex items-center justify-between">
                 <Link href="/" className="logo-link">
                     <img
-                        src="https://i.ibb.co/vC9QCp6X/RWF-logo.png"
+                        src="/rwflogo.gif"
                         alt="Rustam Welfare Foundation Logo"
                         className="navbar-logo"
+                        style={{ mixBlendMode: 'multiply' }}
                     />
                 </Link>
 

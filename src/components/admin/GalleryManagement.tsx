@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { Trash2, Plus, Image as ImageIcon } from 'lucide-react';
+import { Trash2, Plus, Image as ImageIcon, Upload } from 'lucide-react';
+import { uploadImage } from '@/lib/uploadUtils';
 
 const GalleryManagement = () => {
     const [images, setImages] = useState<any[]>([]);
@@ -14,6 +15,8 @@ const GalleryManagement = () => {
         image_url: ''
     });
     const [submitting, setSubmitting] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [uploadMode, setUploadMode] = useState<'url' | 'file'>('file');
 
     useEffect(() => {
         fetchImages();
@@ -38,24 +41,43 @@ const GalleryManagement = () => {
         e.preventDefault();
         setSubmitting(true);
 
-        // Convert empty string to null for timestamp
-        const payload = {
-            ...newImage,
-            event_date: newImage.event_date ? new Date(newImage.event_date).toISOString() : null
-        };
+        try {
+            let finalImageUrl = newImage.image_url;
 
-        const { error } = await supabase
-            .from('gallery')
-            .insert([payload]);
+            if (uploadMode === 'file' && selectedFile) {
+                finalImageUrl = await uploadImage(selectedFile);
+            }
 
-        if (!error) {
-            setNewImage({ title: '', description: '', event_date: '', category: 'General', image_url: '' });
-            setShowAddForm(false);
-            fetchImages();
-        } else {
-            alert('Failed to add image: ' + error.message);
+            if (!finalImageUrl) {
+                alert('Please select a file or provide an image URL');
+                setSubmitting(false);
+                return;
+            }
+
+            // Convert empty string to null for timestamp
+            const payload = {
+                ...newImage,
+                image_url: finalImageUrl,
+                event_date: newImage.event_date ? new Date(newImage.event_date).toISOString() : null
+            };
+
+            const { error } = await supabase
+                .from('gallery')
+                .insert([payload]);
+
+            if (!error) {
+                setNewImage({ title: '', description: '', event_date: '', category: 'General', image_url: '' });
+                setSelectedFile(null);
+                setShowAddForm(false);
+                fetchImages();
+            } else {
+                alert('Failed to add image: ' + error.message);
+            }
+        } catch (error: any) {
+            alert('Error: ' + error.message);
+        } finally {
+            setSubmitting(false);
         }
-        setSubmitting(false);
     };
 
     const deleteImage = async (id: string) => {
@@ -139,15 +161,59 @@ const GalleryManagement = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Image URL *</label>
-                            <input
-                                type="url"
-                                value={newImage.image_url}
-                                onChange={e => setNewImage({ ...newImage, image_url: e.target.value })}
-                                required
-                                placeholder="https://i.ibb.co/..."
-                                className="form-control"
-                            />
+                            <label>Image Source *</label>
+                            <div className="flex gap-1 mb-1">
+                                <button
+                                    type="button"
+                                    onClick={() => setUploadMode('file')}
+                                    className={`btn-outline ${uploadMode === 'file' ? 'active' : ''}`}
+                                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                                >
+                                    Upload from Device
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setUploadMode('url')}
+                                    className={`btn-outline ${uploadMode === 'url' ? 'active' : ''}`}
+                                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                                >
+                                    Image URL
+                                </button>
+                            </div>
+                            
+                            {uploadMode === 'file' ? (
+                                <div className="file-upload-wrapper" style={{ 
+                                    border: '2px dashed var(--border-light)', 
+                                    padding: '1.5rem', 
+                                    borderRadius: '8px', 
+                                    textAlign: 'center',
+                                    backgroundColor: 'var(--main-bg)'
+                                }}>
+                                    <input
+                                        type="file"
+                                        id="gallery-file"
+                                        accept="image/*"
+                                        onChange={e => setSelectedFile(e.target.files?.[0] || null)}
+                                        style={{ display: 'none' }}
+                                    />
+                                    <label htmlFor="gallery-file" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                                        <Upload size={24} className="text-green" />
+                                        <span className="text-dark font-semibold">
+                                            {selectedFile ? selectedFile.name : 'Click to select image from device'}
+                                        </span>
+                                        <span className="text-gray" style={{ fontSize: '0.8rem' }}>Supports JPG, PNG, WEBP</span>
+                                    </label>
+                                </div>
+                            ) : (
+                                <input
+                                    type="url"
+                                    value={newImage.image_url}
+                                    onChange={e => setNewImage({ ...newImage, image_url: e.target.value })}
+                                    required={uploadMode === 'url'}
+                                    placeholder="https://i.ibb.co/..."
+                                    className="form-control"
+                                />
+                            )}
                         </div>
                         <button type="submit" className="btn-primary" disabled={submitting} style={{ alignSelf: 'flex-start' }}>
                             {submitting ? 'Adding...' : 'Save to Gallery'}

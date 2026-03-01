@@ -3,17 +3,56 @@
     position: relative;
     padding-top: 4rem;
     padding-bottom: 4rem;
+    transition: all 0.5s ease;
 }
 
+/* --- Theme Variants --- */
+.ramadan-theme .appeal-card {
+    background: linear-gradient(to bottom right, #ffffff, #f0fdf4);
+    border-left: 6px solid #059669;
+}
+
+.ramadan-theme .appeal-badge {
+    background: linear-gradient(135deg, #059669, #10b981);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.general-theme .appeal-card {
+    background: #ffffff !important;
+    border-left: 8px solid var(--accent-emphasis);
+}
+
+.general-theme .appeal-badge {
+    background: linear-gradient(135deg, var(--accent-emphasis), var(--accent-light));
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.general-theme .stat-icon {
+    background: rgba(var(--accent-rgb), 0.1);
+    color: var(--accent-emphasis);
+}
+
+.general-theme .progress-fill {
+    background: linear-gradient(90deg, var(--accent-emphasis), var(--accent-light));
+}
+
+
 .appeal-card {
-    background: white;
+    background: #ffffff !important;
     border-radius: 30px;
     padding: 3rem;
     box-shadow: var(--shadow-xl);
-    border: 1px solid rgba(5, 150, 105, 0.1);
+    border: 1px solid rgba(5, 150, 105, 0.2);
     position: relative;
     overflow: hidden;
+    color: #0f172a !important; /* Explicit black/dark text */
 }
+
+.ramadan-theme .appeal-card {
+    background: linear-gradient(to bottom right, #ffffff, #f0fdf4) !important;
+    border-left: 8px solid #059669;
+}
+
 
 .appeal-badge {
     position: absolute;
@@ -54,7 +93,7 @@
 
 .appeal-description {
     font-size: 1.1rem;
-    color: var(--text-gray);
+    color: #475569 !important; /* Explicit Slate 600 */
     margin-bottom: 2.5rem;
     line-height: 1.8;
 }

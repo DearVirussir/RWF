@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { Trash2, Plus, Image as ImageIcon } from 'lucide-react';
+import { Trash2, Plus, Image as ImageIcon, Upload } from 'lucide-react';
+import { uploadImage } from '@/lib/uploadUtils';
 
 const CaseManagement = () => {
     const [cases, setCases] = useState<any[]>([]);
@@ -15,6 +16,8 @@ const CaseManagement = () => {
         image_url: ''
     });
     const [submitting, setSubmitting] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [uploadMode, setUploadMode] = useState<'url' | 'file'>('file');
 
     useEffect(() => {
         fetchCases();
@@ -39,18 +42,36 @@ const CaseManagement = () => {
         e.preventDefault();
         setSubmitting(true);
 
-        const { error } = await supabase
-            .from('cases')
-            .insert([newCase]);
+        try {
+            let finalImageUrl = newCase.image_url;
 
-        if (!error) {
-            setNewCase({ title: '', description: '', amount_needed: 0, amount_raised: 0, status: 'Active', image_url: '' });
-            setShowAddForm(false);
-            fetchCases();
-        } else {
-            alert('Failed to add case: ' + error.message);
+            if (uploadMode === 'file' && selectedFile) {
+                finalImageUrl = await uploadImage(selectedFile);
+            }
+
+            if (!finalImageUrl) {
+                alert('Please select a case image or provide a URL');
+                setSubmitting(false);
+                return;
+            }
+
+            const { error } = await supabase
+                .from('cases')
+                .insert([{ ...newCase, image_url: finalImageUrl }]);
+
+            if (!error) {
+                setNewCase({ title: '', description: '', amount_needed: 0, amount_raised: 0, status: 'Active', image_url: '' });
+                setSelectedFile(null);
+                setShowAddForm(false);
+                fetchCases();
+            } else {
+                alert('Failed to add case: ' + error.message);
+            }
+        } catch (error: any) {
+            alert('Error: ' + error.message);
+        } finally {
+            setSubmitting(false);
         }
-        setSubmitting(false);
     };
 
     const deleteCase = async (id: string) => {
@@ -152,15 +173,59 @@ const CaseManagement = () => {
                         </div>
 
                         <div className="form-group">
-                            <label>Image URL *</label>
-                            <input
-                                type="url"
-                                value={newCase.image_url}
-                                onChange={e => setNewCase({ ...newCase, image_url: e.target.value })}
-                                required
-                                placeholder="https://i.ibb.co/..."
-                                className="form-control"
-                            />
+                            <label>Case Image Source *</label>
+                            <div className="flex gap-1 mb-1">
+                                <button
+                                    type="button"
+                                    onClick={() => setUploadMode('file')}
+                                    className={`btn-outline ${uploadMode === 'file' ? 'active' : ''}`}
+                                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                                >
+                                    Upload from Device
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => setUploadMode('url')}
+                                    className={`btn-outline ${uploadMode === 'url' ? 'active' : ''}`}
+                                    style={{ padding: '0.4rem 0.8rem', fontSize: '0.85rem' }}
+                                >
+                                    Image URL
+                                </button>
+                            </div>
+                            
+                            {uploadMode === 'file' ? (
+                                <div className="file-upload-wrapper" style={{ 
+                                    border: '2px dashed var(--border-light)', 
+                                    padding: '1.5rem', 
+                                    borderRadius: '8px', 
+                                    textAlign: 'center',
+                                    backgroundColor: 'var(--main-bg)'
+                                }}>
+                                    <input
+                                        type="file"
+                                        id="case-file"
+                                        accept="image/*"
+                                        onChange={e => setSelectedFile(e.target.files?.[0] || null)}
+                                        style={{ display: 'none' }}
+                                    />
+                                    <label htmlFor="case-file" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                                        <Upload size={24} className="text-green" />
+                                        <span className="text-dark font-semibold">
+                                            {selectedFile ? selectedFile.name : 'Click to select case image from device'}
+                                        </span>
+                                        <span className="text-gray" style={{ fontSize: '0.8rem' }}>Supports JPG, PNG, WEBP</span>
+                                    </label>
+                                </div>
+                            ) : (
+                                <input
+                                    type="url"
+                                    value={newCase.image_url}
+                                    onChange={e => setNewCase({ ...newCase, image_url: e.target.value })}
+                                    required={uploadMode === 'url'}
+                                    placeholder="https://i.ibb.co/..."
+                                    className="form-control"
+                                />
+                            )}
                         </div>
 
                         <button type="submit" className="btn-primary" disabled={submitting} style={{ alignSelf: 'flex-start' }}>

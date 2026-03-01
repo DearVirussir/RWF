@@ -61,9 +61,10 @@ const Footer = () => {
                     <div className="footer-col brand-col">
                         <Link href="/" className="footer-logo-link">
                             <img
-                                src="https://i.ibb.co/vC9QCp6X/RWF-logo.png"
+                                src="/rwflogo.gif"
                                 alt="Rustam Welfare Foundation Logo"
                                 className="footer-logo"
+                                style={{ mixBlendMode: 'multiply' }}
                             />
                         </Link>
                         <h3 className="footer-brand-name">Rustam Welfare Foundation</h3>

@@ -9,7 +9,8 @@ import Donation from '@/components/Donation';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
-import RamadanAppeal from '@/components/RamadanAppeal';
+import SpecialAppeal from '@/components/SpecialAppeal';
+import ProgressUpdates from '@/components/ProgressUpdates';
 
 export default function Home() {
   return (
@@ -17,11 +18,12 @@ export default function Home() {
       <main className="min-h-screen">
         <Navbar />
         <Hero />
-        <RamadanAppeal />
+        <SpecialAppeal />
         <About />
         <Staff />
         <Cases />
         <KeyInitiatives />
+        <ProgressUpdates />
         <Gallery />
         <Donation />
         <Contact />
