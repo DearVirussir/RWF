@@ -9,6 +9,17 @@ const SpecialAppeal = () => {
     const [appeal, setAppeal] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
+    const defaultAppeal = {
+        title: 'Special Ramadan Appeal 2026',
+        subtitle: 'Eid Shopping for 600+ Orphans & Rashan Distribution',
+        description: 'Once again, in this Ramadan, we are committed to providing Eid shopping for our orphans and food packages for widows. Your generous support can bring a smile to those who need it most.',
+        goal_amount: 2000000,
+        current_amount: 235000,
+        image_url: 'https://i.ibb.co/QjDjVVZN/ramadan.jpg',
+        is_active: true,
+        is_ramadan_theme: true
+    };
+
     useEffect(() => {
         fetchAppeal();
     }, []);
@@ -23,8 +34,9 @@ const SpecialAppeal = () => {
 
             if (!error && data) {
                 setAppeal(data);
-            } else if (!error && !data) {
-                setAppeal({ is_active: false }); // Explicitly mark as no active appeal found
+            } else {
+                // Fallback to default if no active appeal found or error
+                setAppeal(defaultAppeal);
             }
         } catch (err) {
             console.error('Error fetching appeal:', err);
@@ -39,7 +51,7 @@ const SpecialAppeal = () => {
         </div>
     );
 
-    if (!appeal || appeal.is_active === false) return null;
+    if (!appeal) return null;
 
     const displayAppeal = appeal;
 
