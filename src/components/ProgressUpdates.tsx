@@ -9,6 +9,12 @@ const ProgressUpdates = () => {
     const [updates, setUpdates] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const defaultUpdates = [
+        { id: 'f1', title: 'Phase 1: Ramadan Rashan Distribution', content: 'We have successfully completed the first phase of our Ramadan food package distribution, reaching over 200 families in rural areas.', image_url: 'https://i.ibb.co/k2cr632d/Whats-App-Image-2026-02-25-at-3-25-38-PM-1.jpg', created_at: new Date().toISOString() },
+        { id: 'f2', title: 'New Secondary School Project', content: 'Construction has begun on our new vocational training center. This project aims to empower local youth with technical skills.', image_url: 'https://i.ibb.co/k2cr632d/Whats-App-Image-2026-02-25-at-3-25-38-PM-1.jpg', created_at: new Date().toISOString() },
+        { id: 'f3', title: 'Mobile Clinic Success', content: 'Our mobile healthcare unit served over 500 patients last month, providing essential medical checkups and free medicines.', image_url: 'https://i.ibb.co/k2cr632d/Whats-App-Image-2026-02-25-at-3-25-38-PM-1.jpg', created_at: new Date().toISOString() }
+    ];
+
     useEffect(() => {
         fetchUpdates();
     }, []);
@@ -20,15 +26,16 @@ const ProgressUpdates = () => {
             .order('created_at', { ascending: false })
             .limit(3);
 
-        if (!error && data) {
+        if (!error && data && data.length > 0) {
             setUpdates(data);
-        } else if (error) {
-            console.error('Error fetching updates:', error);
+        } else {
+            console.log('Using default updates (No data found or error)');
+            setUpdates(defaultUpdates);
         }
         setLoading(false);
     };
 
-    if (loading || updates.length === 0) return null;
+    if (loading) return null;
 
     return (
         <section id="updates" className="py-section updates-section">

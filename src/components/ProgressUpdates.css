@@ -24,7 +24,7 @@
 }
 
 .update-image {
-    height: 240px;
+    height: 480px; /* Taller for portrait feel */
     width: 100%;
     overflow: hidden;
 }
