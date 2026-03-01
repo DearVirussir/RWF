@@ -10,7 +10,6 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
 import SpecialAppeal from '@/components/SpecialAppeal';
-import SpecialAppeal from '@/components/SpecialAppeal';
 
 export default function Home() {
   return (
