@@ -154,6 +154,10 @@ CREATE POLICY "Allow public subscribe" ON public.newsletter_subscriptions FOR IN
 ALTER TABLE public.contact_messages DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.newsletter_subscriptions DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.special_appeals DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.cases DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.gallery DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.staff DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.progress_updates DISABLE ROW LEVEL SECURITY;
 
 /* 
   --- 10. SUPABASE STORAGE SETUP ---

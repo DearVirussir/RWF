@@ -71,7 +71,7 @@ const Cases = () => {
                             <div key={c.id} className="case-card card">
                                 <div className="case-image-wrapper">
                                     {c.image_url ? (
-                                        <img src={c.image_url} alt={c.title} className="case-img" />
+                                        <img src={c.image_url} alt={c.title} className="case-img" loading="lazy" />
                                     ) : (
                                         <div className="case-placeholder">No Image</div>
                                     )}

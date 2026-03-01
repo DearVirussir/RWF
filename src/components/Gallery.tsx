@@ -59,7 +59,7 @@ const Gallery = () => {
                         <div key={item.id} className="gallery-item group">
                             <div className="gallery-img-placeholder">
                                 {item.image_url ? (
-                                    <img src={item.image_url} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} className="group-hover:scale-110" />
+                                    <img src={item.image_url} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} className="group-hover:scale-110" loading="lazy" />
                                 ) : (
                                     <span className="text-gray opacity-50">Image</span>
                                 )}

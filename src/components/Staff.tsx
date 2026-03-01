@@ -49,7 +49,7 @@ const Staff = () => {
                         <div key={member.id} className="staff-card card">
                             <div className="staff-image-wrapper">
                                 {member.image_url ? (
-                                    <img src={member.image_url} alt={member.name} className="staff-img" />
+                                    <img src={member.image_url} alt={member.name} className="staff-img" loading="lazy" />
                                 ) : (
                                     <div className="staff-placeholder">No Image</div>
                                 )}

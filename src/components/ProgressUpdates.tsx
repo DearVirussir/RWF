@@ -22,6 +22,8 @@ const ProgressUpdates = () => {
 
         if (!error && data) {
             setUpdates(data);
+        } else if (error) {
+            console.error('Error fetching updates:', error);
         }
         setLoading(false);
     };
@@ -41,7 +43,7 @@ const ProgressUpdates = () => {
                         <div key={update.id} className="update-card reveal">
                             {update.image_url && (
                                 <div className="update-image">
-                                    <img src={update.image_url} alt={update.title} />
+                                    <img src={update.image_url} alt={update.title} loading="lazy" />
                                 </div>
                             )}
                             <div className="update-content">
