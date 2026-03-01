@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
+import ScrollRevealWrapper from "@/components/ScrollRevealWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,7 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${outfit.variable}`}>
-        {children}
+        <ScrollRevealWrapper>
+          {children}
+        </ScrollRevealWrapper>
       </body>
     </html>
   );
