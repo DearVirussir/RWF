@@ -21,12 +21,15 @@ const Navbar = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
+    const navLinks = [
+        { name: 'Home', href: '/' },
         { name: 'Cases', href: '#cases' },
         { name: 'Our Work', href: '#gallery' },
         { name: 'About', href: '#about' },
         { name: 'Programs', href: '#initiatives' },
         { name: 'Team', href: '#staff' },
         { name: 'Contact', href: '#contact' },
+    ];
 
     return (
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
