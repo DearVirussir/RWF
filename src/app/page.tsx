@@ -22,8 +22,10 @@ export default function Home() {
     <ScrollRevealWrapper>
       <main className="min-h-screen">
         <Navbar />
-        <Gallery />
+        <Hero />
+        <SpecialAppeal />
         <Cases />
+        <Gallery />
         <About />
         <Donation />
         <KeyInitiatives />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeartPulse, GraduationCap, Briefcase, Utensils, Star, ShoppingBag, Truck, Stethoscope } from 'lucide-react';
+import { HeartPulse, GraduationCap, Briefcase, Utensils, Star, ShoppingBag, Truck, Stethoscope, Droplets } from 'lucide-react';
 import './KeyInitiatives.css';
 
 const KeyInitiatives = () => {
@@ -43,6 +43,11 @@ const KeyInitiatives = () => {
             title: 'Education Help',
             description: 'Supporting underprivileged children with fees, uniforms, and stationary to prevent them from dropping out of school.',
             icon: <GraduationCap size={40} className="initiative-icon" />
+        },
+        {
+            title: 'Clean Water',
+            description: 'Installing solar-powered water pumps and hand pumps in remote and thirsty areas to ensure life-saving access to pure water.',
+            icon: <Droplets size={40} className="initiative-icon" />
         }
     ];
 
