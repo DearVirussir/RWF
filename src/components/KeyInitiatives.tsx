@@ -3,6 +3,7 @@ import { HeartPulse, GraduationCap, Briefcase, Utensils, Star, ShoppingBag, Truc
 import './KeyInitiatives.css';
 
 const KeyInitiatives = () => {
+    const initiatives = [
         {
             title: 'Small Business Stalls',
             description: 'We have already provided over 100 fully renovated and stocked stalls to deserving people, helping them earn a respectable living.',
