@@ -90,15 +90,9 @@ CREATE TABLE IF NOT EXISTS public.newsletter_subscriptions (
 /* --- 9. Special Appeals Table --- */
 CREATE TABLE IF NOT EXISTS public.special_appeals (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  title TEXT NOT NULL,
-  subtitle TEXT,
-  description TEXT,
-  goal_amount DECIMAL(12, 2) DEFAULT 0,
-  current_amount DECIMAL(12, 2) DEFAULT 0,
-  image_url TEXT,
-  is_active BOOLEAN DEFAULT TRUE,
   is_ramadan_theme BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
+  CONSTRAINT unique_appeal_title UNIQUE (title)
 );
 
 -- Insert the current Ramadan 2026 data as a starting point
@@ -112,7 +106,7 @@ VALUES (
   'https://i.ibb.co/QjDjVVZN/ramadan.jpg',
   TRUE,
   TRUE
-) ON CONFLICT DO NOTHING;
+) ON CONFLICT (title) DO NOTHING;
 
 -- NOTE: If you still see "column not found" errors in your browser after running this,
 -- please go to the Supabase Dashboard > API Settings and look for a way to "Refresh Schema Cache" 

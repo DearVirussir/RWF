@@ -29,6 +29,8 @@ const SpecialAppeal = () => {
             const { data, error } = await supabase
                 .from('special_appeals')
                 .select('*')
+                .order('created_at', { ascending: false })
+                .limit(1)
                 .maybeSingle();
 
             if (!error && data) {
