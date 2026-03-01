@@ -18,23 +18,27 @@ const AppealManagement = () => {
 
     const fetchAppeal = async () => {
         setLoading(true);
+        // Get the single record without filtering by is_active
         const { data, error } = await supabase
             .from('special_appeals')
             .select('*')
-            .eq('is_active', true)
-            .single();
+            .maybeSingle();
 
-        if (error && error.code !== 'PGRST116') {
+        if (error) {
             console.error('Error fetching appeal:', error);
+        } else if (data) {
+            setAppeal(data);
         } else {
-            setAppeal(data || {
-                title: 'New Appeal',
-                subtitle: '',
-                description: '',
-                goal_amount: 0,
-                current_amount: 0,
-                image_url: '',
-                is_ramadan_theme: false
+            // No record in DB yet
+            setAppeal({
+                title: 'Special Ramadan Appeal 2026',
+                subtitle: 'Eid Shopping for 600+ Orphans & Rashan Distribution',
+                description: 'Once again, in this Ramadan, we are committed to providing Eid shopping for our orphans and food packages for widows.',
+                goal_amount: 2000000,
+                current_amount: 235000,
+                image_url: 'https://i.ibb.co/QjDjVVZN/ramadan.jpg',
+                is_active: true,
+                is_ramadan_theme: true
             });
         }
         setLoading(false);

@@ -29,14 +29,12 @@ const SpecialAppeal = () => {
             const { data, error } = await supabase
                 .from('special_appeals')
                 .select('*')
-                .eq('is_active', true)
                 .maybeSingle();
 
             if (!error && data) {
                 setAppeal(data);
-            } else {
-                // Fallback to default if no active appeal found or error
-                setAppeal(defaultAppeal);
+            } else if (error) {
+                console.error('Error fetching appeal:', error);
             }
         } catch (err) {
             console.error('Error fetching appeal:', err);
@@ -51,7 +49,7 @@ const SpecialAppeal = () => {
         </div>
     );
 
-    if (!appeal) return null;
+    if (!appeal || appeal.is_active === false) return null;
 
     const displayAppeal = appeal;
 
