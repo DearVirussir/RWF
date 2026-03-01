@@ -6,7 +6,16 @@ import { uploadImage } from '@/lib/uploadUtils';
 import { Save, Upload, Image as ImageIcon, CheckCircle, AlertCircle } from 'lucide-react';
 
 const AppealManagement = () => {
-    const [appeal, setAppeal] = useState<any>(null);
+    const [appeal, setAppeal] = useState<any>({
+        title: '',
+        subtitle: '',
+        description: '',
+        goal_amount: 0,
+        current_amount: 0,
+        image_url: '',
+        is_active: false,
+        is_ramadan_theme: false
+    });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -26,20 +35,12 @@ const AppealManagement = () => {
 
         if (error) {
             console.error('Error fetching appeal:', error);
+            // Even on error, we keep the default state so it doesn't crash
         } else if (data) {
             setAppeal(data);
         } else {
-            // No record in DB yet
-            setAppeal({
-                title: 'Special Ramadan Appeal 2026',
-                subtitle: 'Eid Shopping for 600+ Orphans & Rashan Distribution',
-                description: 'Once again, in this Ramadan, we are committed to providing Eid shopping for our orphans and food packages for widows.',
-                goal_amount: 2000000,
-                current_amount: 235000,
-                image_url: 'https://i.ibb.co/QjDjVVZN/ramadan.jpg',
-                is_active: true,
-                is_ramadan_theme: true
-            });
+            // No record in DB yet - we already have defaults in state, 
+            // but we can set them again for clarity if needed.
         }
         setLoading(false);
     };
