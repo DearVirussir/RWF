@@ -15,6 +15,9 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: "Rustam Welfare Foundation",
   description: "Dedicated to Serving Humanity with Compassion and Hope",
+  icons: {
+    icon: "/rwflogo.gif",
+  },
 };
 
 export default function RootLayout({
