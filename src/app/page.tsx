@@ -10,7 +10,7 @@ import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import ScrollRevealWrapper from '@/components/ScrollRevealWrapper';
 import SpecialAppeal from '@/components/SpecialAppeal';
-import ProgressUpdates from '@/components/ProgressUpdates';
+import SpecialAppeal from '@/components/SpecialAppeal';
 
 export default function Home() {
   return (
@@ -23,7 +23,6 @@ export default function Home() {
         <Staff />
         <Cases />
         <KeyInitiatives />
-        <ProgressUpdates />
         <Gallery />
         <Donation />
         <Contact />

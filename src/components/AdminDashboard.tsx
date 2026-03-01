@@ -42,8 +42,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ session }) => {
                 return <NewsletterManagement />;
             case 'appeal':
                 return <AppealManagement />;
-            case 'updates':
-                return <ProgressUpdateManagement />;
             case 'messages':
                 return <ContactMessages />;
             default:
@@ -84,9 +82,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ session }) => {
                     <button className={`admin-nav-item ${activeTab === 'appeal' ? 'active' : ''}`} onClick={() => setActiveTab('appeal')}>
                         <Star size={20} /> Special Appeal
                     </button>
-                    <button className={`admin-nav-item ${activeTab === 'updates' ? 'active' : ''}`} onClick={() => setActiveTab('updates')}>
-                        <FileText size={20} /> Progress Updates
-                    </button>
                     <button className={`admin-nav-item ${activeTab === 'messages' ? 'active' : ''}`} onClick={() => setActiveTab('messages')}>
                         <MessageSquare size={20} /> Messages
                     </button>
@@ -122,7 +117,6 @@ import ContactMessages from './admin/ContactMessages';
 import CaseManagement from './admin/CaseManagement';
 import StaffManagement from './admin/StaffManagement';
 import NewsletterManagement from './admin/NewsletterManagement';
-import ProgressUpdateManagement from './admin/ProgressUpdateManagement';
 
 const StatisticsDashboard = () => {
     const [stats, setStats] = useState({
@@ -186,7 +180,7 @@ const StatisticsDashboard = () => {
                 <h3>Welcome to the Rustam Welfare Foundation Admin Dashboard</h3>
                 <p className="mt-1 text-gray">
                     Use the sidebar to navigate between different management modules.
-                    You can manage newsletter subscribers, upload images to the gallery, post progress updates, manage cases, and read messages from the contact form.
+                    You can manage newsletter subscribers, upload images to the gallery, manage cases, and read messages from the contact form.
                 </p>
             </div>
         </div>

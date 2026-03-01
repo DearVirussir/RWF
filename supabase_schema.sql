@@ -46,23 +46,6 @@ BEGIN
     END IF;
 END $$;
 
-/* --- 4. Updates table (Progress Updates) --- */
-CREATE TABLE IF NOT EXISTS public.progress_updates (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  title TEXT NOT NULL,
-  content TEXT NOT NULL,
-  image_url TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
-);
-
--- Handle case where it might have been named 'updates'
-DO $$
-BEGIN
-    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name='updates') AND 
-       NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name='progress_updates') THEN
-        ALTER TABLE public.updates RENAME TO progress_updates;
-    END IF;
-END $$;
 
 
 /* --- 5. Donations table --- */
@@ -157,7 +140,6 @@ ALTER TABLE public.special_appeals DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cases DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.gallery DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.staff DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.progress_updates DISABLE ROW LEVEL SECURITY;
 
 /* 
   --- 10. SUPABASE STORAGE SETUP ---
