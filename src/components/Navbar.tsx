@@ -23,12 +23,11 @@ const Navbar = () => {
 
     const navLinks = [
         { name: 'Home', href: '/' },
-        { name: 'Cases', href: '#cases' },
-        { name: 'Our Work', href: '#gallery' },
-        { name: 'About', href: '#about' },
-        { name: 'Programs', href: '#initiatives' },
-        { name: 'Team', href: '#staff' },
-        { name: 'Contact', href: '#contact' },
+        { name: 'Cases', href: '/#cases' },
+        { name: 'Our Work', href: '/#our-work' },
+        { name: 'About', href: '/#about' },
+        { name: 'Team', href: '/#staff' },
+        { name: 'Contact', href: '/#contact' },
     ];
 
     return (
@@ -50,7 +49,7 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-                    <Link href="#donate" className="btn-primary donate-btn">
+                    <Link href="/#donate" className="btn-primary donate-btn">
                         Donate Now
                     </Link>
                 </div>
@@ -77,7 +76,7 @@ const Navbar = () => {
                         </Link>
                     ))}
                     <Link
-                        href="#donate"
+                        href="/#donate"
                         className="btn-primary mt-1"
                         onClick={() => setIsMobileMenuOpen(false)}
                     >

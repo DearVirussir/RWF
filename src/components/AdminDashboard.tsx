@@ -74,7 +74,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ session }) => {
                         <Briefcase size={20} /> Staff & Volunteers
                     </button>
                     <button className={`admin-nav-item ${activeTab === 'gallery' ? 'active' : ''}`} onClick={() => setActiveTab('gallery')}>
-                        <ImageIcon size={20} /> Gallery Management
+                        <ImageIcon size={20} /> Our Work & Stories
                     </button>
                     <button className={`admin-nav-item ${activeTab === 'newsletter' ? 'active' : ''}`} onClick={() => setActiveTab('newsletter')}>
                         <MailIcon size={20} /> Newsletter

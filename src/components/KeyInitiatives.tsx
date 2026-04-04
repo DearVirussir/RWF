@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { HeartPulse, GraduationCap, Briefcase, Utensils, Star, ShoppingBag, Truck, Stethoscope, Droplets } from 'lucide-react';
 import './KeyInitiatives.css';
 
@@ -52,20 +53,26 @@ const KeyInitiatives = () => {
     ];
 
     return (
-        <section id="initiatives" className="py-section">
+        <section id="our-work" className="py-section">
             <div className="container">
-                <h2 className="section-title">Key Initiatives</h2>
+                <h2 className="section-title">Our Work & Impact</h2>
 
                 <div className="initiatives-grid">
-                    {initiatives.map((item, index) => (
-                        <div key={index} className="initiative-card card">
+                    {initiatives.map((item, index) => {
+                        const slug = item.title.toLowerCase().replace(/\s+/g, '-');
+                        return (
+                        <Link key={index} href={`/our-work/${slug}`} className="initiative-card card" style={{ display: 'block', textDecoration: 'none' }}>
                             <div className="icon-wrapper">
                                 {item.icon}
                             </div>
                             <h3 className="initiative-title">{item.title}</h3>
-                            <p className="initiative-desc">{item.description}</p>
-                        </div>
-                    ))}
+                            <p className="initiative-desc" style={{ color: 'var(--text-gray)' }}>{item.description}</p>
+                            <div className="mt-2" style={{ color: 'var(--primary-green)', fontWeight: '600', fontSize: '0.9rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                View Stories →
+                            </div>
+                        </Link>
+                        );
+                    })}
                 </div>
             </div>
         </section>

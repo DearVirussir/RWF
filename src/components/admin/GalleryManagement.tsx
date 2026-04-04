@@ -11,7 +11,7 @@ const GalleryManagement = () => {
         title: '',
         description: '',
         event_date: '',
-        category: 'General',
+        category: 'Small Business Stalls',
         image_url: ''
     });
     const [submitting, setSubmitting] = useState(false);
@@ -66,7 +66,7 @@ const GalleryManagement = () => {
                 .insert([payload]);
 
             if (!error) {
-                setNewImage({ title: '', description: '', event_date: '', category: 'General', image_url: '' });
+                setNewImage({ title: '', description: '', event_date: '', category: 'Small Business Stalls', image_url: '' });
                 setSelectedFile(null);
                 setShowAddForm(false);
                 fetchImages();
@@ -98,7 +98,7 @@ const GalleryManagement = () => {
     return (
         <div className="admin-tab-content">
             <div className="flex justify-between items-center mb-2">
-                <h3>Gallery Management</h3>
+                <h3>Our Work & Stories</h3>
                 <button
                     onClick={() => setShowAddForm(!showAddForm)}
                     className="btn-primary flex items-center gap-1"
@@ -109,7 +109,7 @@ const GalleryManagement = () => {
 
             {showAddForm && (
                 <div className="card mb-2" style={{ backgroundColor: 'var(--secondary-bg)' }}>
-                    <h4 style={{ margin: '0 0 1rem 0' }}>Add New Gallery Item</h4>
+                    <h4 style={{ margin: '0 0 1rem 0' }}>Add New Success Story</h4>
                     <form onSubmit={handleAddSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                             <div className="form-group">
@@ -129,11 +129,15 @@ const GalleryManagement = () => {
                                     onChange={e => setNewImage({ ...newImage, category: e.target.value })}
                                     className="form-control"
                                 >
-                                    <option value="General">General</option>
-                                    <option value="Healthcare">Healthcare</option>
-                                    <option value="Education">Education</option>
-                                    <option value="Relief">Emergency Relief</option>
-                                    <option value="Community">Community</option>
+                                    <option value="Small Business Stalls">Small Business Stalls</option>
+                                    <option value="Widow Empowerment">Widow Empowerment</option>
+                                    <option value="Financial Grants">Financial Grants</option>
+                                    <option value="Ramadan Packages">Ramadan Packages</option>
+                                    <option value="Monthly Ration">Monthly Ration</option>
+                                    <option value="Transport Support">Transport Support</option>
+                                    <option value="Emergency Medical">Emergency Medical</option>
+                                    <option value="Education Help">Education Help</option>
+                                    <option value="Clean Water">Clean Water</option>
                                 </select>
                             </div>
                         </div>
@@ -216,14 +220,14 @@ const GalleryManagement = () => {
                             )}
                         </div>
                         <button type="submit" className="btn-primary" disabled={submitting} style={{ alignSelf: 'flex-start' }}>
-                            {submitting ? 'Adding...' : 'Save to Gallery'}
+                            {submitting ? 'Adding...' : 'Save Story'}
                         </button>
                     </form>
                 </div>
             )}
 
             {images.length === 0 ? (
-                <p className="text-gray mt-2">No images in gallery yet.</p>
+                <p className="text-gray mt-2">No success stories uploaded yet.</p>
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
                     {images.map(img => (

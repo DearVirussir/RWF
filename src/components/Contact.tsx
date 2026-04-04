@@ -58,7 +58,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="location" className="py-section bg-light">
+        <section id="contact" className="py-section bg-light">
             <div className="container">
                 <h2 className="section-title">Location & Contact</h2>
 

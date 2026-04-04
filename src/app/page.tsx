@@ -7,7 +7,7 @@ import About from '@/components/About';
 import Staff from '@/components/Staff';
 import Cases from '@/components/Cases';
 import KeyInitiatives from '@/components/KeyInitiatives';
-import Gallery from '@/components/Gallery';
+
 import Donation from '@/components/Donation';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
@@ -25,12 +25,12 @@ export default function Home() {
         <Hero />
         <SpecialAppeal />
         <Cases />
-        <Gallery />
+
         <About />
         <Donation />
         <KeyInitiatives />
         
-        <section className="py-section bg-light text-center">
+        <section id="staff" className="py-section bg-light text-center">
             <div className="container">
                 {!showStaff ? (
                     <button 
