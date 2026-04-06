@@ -1,10 +1,26 @@
 'use client';
 
-import React from 'react';
-import { Download } from 'lucide-react';
+import React, { useState } from 'react';
+import { Download, Copy, Check } from 'lucide-react';
 import './Donation.css';
 
 const Donation = () => {
+    const [copiedField, setCopiedField] = useState<string | null>(null);
+
+    const bankDetails = [
+        { label: 'Bank Name', value: 'United Bank Limited (UBL)', field: 'bank' },
+        { label: 'Account Title', value: 'Zafar Ali', field: 'title' },
+        { label: 'Account Number', value: '0002 3369 3042', field: 'account' },
+        { label: 'IBAN', value: 'PK89 UNIL 0109 0002 3369 3042', field: 'iban' },
+        { label: 'Branch Code', value: '0109', field: 'branch' },
+    ];
+
+    const handleCopy = (text: string, field: string) => {
+        navigator.clipboard.writeText(text);
+        setCopiedField(field);
+        setTimeout(() => setCopiedField(null), 2000);
+    };
+
     const qrCodeUrl = 'https://i.ibb.co/TBFWVHq1/Whats-App-Image-2026-02-28-at-11-10-12-AM.jpg';
 
     const handleDownloadQR = async () => {
@@ -80,26 +96,22 @@ const Donation = () => {
                         <h3 className="donation-method-title text-green">Direct Bank Transfer</h3>
 
                         <div className="bank-details mt-2">
-                            <div className="detail-row">
-                                <span className="label">Bank Name:</span>
-                                <span className="value">XYZ Bank (Placeholder)</span>
-                            </div>
-                            <div className="detail-row">
-                                <span className="label">Account Title:</span>
-                                <span className="value">Rustam Welfare Foundation</span>
-                            </div>
-                            <div className="detail-row">
-                                <span className="label">Account Number:</span>
-                                <span className="value">1234-5678-9012-3456</span>
-                            </div>
-                            <div className="detail-row">
-                                <span className="label">IBAN:</span>
-                                <span className="value">PK30 XYZB 1234 5678 9012 3456</span>
-                            </div>
-                            <div className="detail-row">
-                                <span className="label">Branch Code:</span>
-                                <span className="value">1234</span>
-                            </div>
+                            {bankDetails.map((detail) => (
+                                <div className="detail-row flex justify-between items-center mb-1" key={detail.field} style={{ borderBottom: '1px solid var(--border-light)', paddingBottom: '0.4rem' }}>
+                                    <span className="label font-semibold">{detail.label}:</span>
+                                    <div className="value-group flex items-center gap-1">
+                                        <span className="value">{detail.value}</span>
+                                        <button
+                                            onClick={() => handleCopy(detail.value, detail.field)}
+                                            className="copy-btn flex items-center"
+                                            title={`Copy ${detail.label}`}
+                                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-green)', padding: '0.2rem' }}
+                                        >
+                                            {copiedField === detail.field ? <Check size={16} /> : <Copy size={16} />}
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
 
                         <div className="receipt-note mt-2">
