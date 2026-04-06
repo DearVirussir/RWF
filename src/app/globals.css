@@ -71,9 +71,8 @@ h2 {
   margin-bottom: 3rem;
   text-align: center;
   position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
+  display: block;
+  width: 100%;
 }
 
 h2::after {
@@ -342,15 +341,13 @@ textarea.form-control {
 @media (max-width: 768px) {
   h2 {
     font-size: 2.25rem;
-    left: 0;
-    transform: none;
-    text-align: left;
+    text-align: center;
     margin-bottom: 2rem;
   }
 
   h2::after {
-    left: 0;
-    transform: none;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .py-section {
