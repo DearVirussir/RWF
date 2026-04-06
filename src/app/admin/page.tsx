@@ -13,8 +13,16 @@ export default function AdminPage() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => {
+        supabase.auth.getSession().then(({ data: { session }, error }) => {
+            if (error) {
+                console.warn('Supabase auth error:', error.message);
+                // Clear the stale/invalid token
+                supabase.auth.signOut().catch(() => {});
+            }
             setSession(session);
+            setLoading(false);
+        }).catch((err) => {
+            console.error('Unhandled session error:', err);
             setLoading(false);
         });
 
