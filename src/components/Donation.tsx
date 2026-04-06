@@ -10,9 +10,9 @@ const Donation = () => {
     const bankDetails = [
         { label: 'Bank Name', value: 'United Bank Limited (UBL)', field: 'bank' },
         { label: 'Account Title', value: 'Zafar Ali', field: 'title' },
-        { label: 'Account Number', value: '0002 3369 3042', field: 'account' },
+        { label: 'Account Number', value: '0304233693042', field: 'account' },
         { label: 'IBAN', value: 'PK89 UNIL 0109 0002 3369 3042', field: 'iban' },
-        { label: 'Branch Code', value: '0109', field: 'branch' },
+        { label: 'Branch Code', value: '0304', field: 'branch' },
     ];
 
     const handleCopy = (text: string, field: string) => {
