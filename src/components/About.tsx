@@ -33,7 +33,7 @@ const About = () => {
 
                     <div className="about-image-wrapper">
                         <img
-                            src="https://i.ibb.co/LD9zWTFz/Whats-App-Image-2026-01-13-at-2-41-53-PM.jpg"
+                            src="/chairman-2026.jpeg"
                             alt="Engr. Zafar Sabat Khiel"
                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
