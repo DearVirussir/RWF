@@ -61,14 +61,37 @@ const Donation = () => {
                                 <ol className="donation-steps">
                                     <li>Log in to your EasyPaisa app or dial *786#.</li>
                                     <li>Select "Send Money".</li>
-                                    <li>Enter the mobile number: <span className="highlight-number">03405454966</span></li>
+                                    <li>
+                                        Enter the mobile number:{' '}
+                                        <span className="highlight-number inline-flex items-center gap-1">
+                                            03405454966
+                                            <button
+                                                onClick={() => handleCopy('03405454966', 'easypaisa-1')}
+                                                className="copy-btn flex items-center"
+                                                title="Copy Mobile Number"
+                                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-green)', padding: '0 0.2rem' }}
+                                            >
+                                                {copiedField === 'easypaisa-1' ? <Check size={16} /> : <Copy size={16} />}
+                                            </button>
+                                        </span>
+                                    </li>
                                     <li>Enter the amount you wish to donate.</li>
                                     <li>Confirm the transaction.</li>
                                 </ol>
 
                                 <div className="account-details-box mt-2">
                                     <p className="label">EasyPaisa Account Number</p>
-                                    <p className="value highlight-number">0340-5454966</p>
+                                    <div className="flex items-center gap-1">
+                                        <p className="value highlight-number" style={{ margin: 0 }}>0340-5454966</p>
+                                        <button
+                                            onClick={() => handleCopy('03405454966', 'easypaisa-2')}
+                                            className="copy-btn flex items-center"
+                                            title="Copy Account Number"
+                                            style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary-green)', padding: '0.2rem' }}
+                                        >
+                                            {copiedField === 'easypaisa-2' ? <Check size={16} /> : <Copy size={16} />}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
