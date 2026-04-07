@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import ScrollRevealWrapper from "@/components/ScrollRevealWrapper";
 
@@ -32,6 +33,7 @@ export default function RootLayout({
         <ScrollRevealWrapper>
           {children}
         </ScrollRevealWrapper>
+        <Analytics />
       </body>
     </html>
   );
